@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Brain, Palette, Settings, X, Wand2, Video } from 'lucide-react';
+import { X, Wand2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function Home() {
   const [showChangelog, setShowChangelog] = useState(false);
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
   useEffect(() => {
     // Show changelog modal on first visit
@@ -18,68 +19,93 @@ export default function Home() {
     localStorage.setItem('hasSeenChangelog_v1.0', 'true');
   };
 
+  const workflows = [
+    { id: 'prompt-image', name: 'prompt & image it', path: '/prompt-image', badge: null },
+    { id: 'stylize-it', name: 'stylize it', path: '/stylize-it', badge: 'BETA' },
+    { id: 'tweak-it', name: 'tweak it', path: '/tweak-it', badge: 'NEW' },
+    { id: 'video-it', name: 'video it', path: '/video-it', badge: 'NEW' }
+  ];
+
   return (
     <>
-      <div className={`flex flex-col items-center justify-center min-h-full space-y-16 ${showChangelog ? 'blur-sm' : ''}`}>
-        {/* Workflows Section - Centered */}
-        <section className="w-full max-w-5xl">
-          <div className="flex items-center justify-center mb-8 gap-3">
-            <h2 className="text-3xl font-medium tracking-wide text-center bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent animate-fast-gradient">
-              Hello Amine,<br />Choose your creative journey
-            </h2>
-            <Wand2 className="w-8 h-8 text-emerald-500" />
+      <div className={`min-h-screen flex flex-col items-center justify-center bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 ${showChangelog ? 'blur-sm' : ''}`}>
+        {/* Header */}
+        <div className="absolute top-8 left-8 flex items-center gap-3">
+          <h1 className="text-xl font-medium">aminejourney</h1>
+          <span className="text-sm text-neutral-400">v1.0 alpha</span>
+        </div>
+
+        {/* Main Content */}
+        <div className="flex flex-col items-center justify-center space-y-16 max-w-4xl mx-auto px-8">
+          {/* Welcome Message */}
+          <div className="text-center space-y-4">
+            <div className="flex items-center justify-center gap-3 mb-8">
+              <h2 className="text-4xl md:text-5xl font-light tracking-wide">
+                Hello Amine,<br />
+                Choose your creative journey
+              </h2>
+              <Wand2 className="w-8 h-8 text-emerald-500 mt-4" />
+            </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Link to="/prompt-image" className="group">
-              <div className="relative p-8 rounded-2xl bg-neutral-100/80 dark:bg-neutral-800/80 backdrop-blur-xl border border-white/10 shadow-lg transition-all duration-300 group-hover:bg-gradient-to-br group-hover:from-[#E0F7FF]/80 group-hover:via-[#E8F7FF]/50 group-hover:to-[#F2FCFF]/30 hover:shadow-2xl hover:scale-[1.02] aspect-square flex flex-col items-center justify-center text-center">
-                <Brain className="w-16 h-16 text-neutral-400 transition-colors duration-300 group-hover:text-[#0EA5E9] mb-6" />
-                <h3 className="text-lg font-semibold text-neutral-500 dark:text-neutral-400 transition-colors duration-300 group-hover:text-[#0EA5E9] mb-4">PROMPT & IMAGE IT</h3>
-                <button className="text-sm text-neutral-500 dark:text-neutral-400 font-medium transition-colors duration-300 group-hover:text-[#0EA5E9] px-6 py-2 rounded-lg border border-neutral-300 dark:border-neutral-600 group-hover:border-[#0EA5E9]">
-                  TRY IT
-                </button>
-              </div>
-            </Link>
 
-            <Link to="/stylize-it" className="group relative">
-              <div className="relative p-8 rounded-2xl bg-neutral-100/80 dark:bg-neutral-800/80 backdrop-blur-xl border border-white/10 shadow-lg transition-all duration-300 group-hover:bg-gradient-to-br group-hover:from-[#F3E8FF]/80 group-hover:via-[#F5EEFF]/50 group-hover:to-[#F8F2FF]/30 hover:shadow-2xl hover:scale-[1.02] aspect-square flex flex-col items-center justify-center text-center">
-                <div className="absolute top-4 right-4 px-2 py-1 bg-neutral-200 dark:bg-neutral-700 group-hover:bg-[#A855F7]/20 rounded-full transition-colors duration-300">
-                  <span className="text-xs font-medium text-neutral-500 dark:text-neutral-400 group-hover:text-[#A855F7]">BETA</span>
+          {/* Workflows List */}
+          <div className="space-y-8 w-full max-w-2xl">
+            {workflows.map((workflow) => (
+              <Link
+                key={workflow.id}
+                to={workflow.path}
+                className="block group"
+                onMouseEnter={() => setHoveredItem(workflow.id)}
+                onMouseLeave={() => setHoveredItem(null)}
+              >
+                <div className="relative flex items-center justify-between py-6 border-b border-neutral-200 dark:border-neutral-800 transition-all duration-300">
+                  <div className="flex items-center gap-4">
+                    <h3 
+                      className={`font-light tracking-wide transition-all duration-500 ease-out ${
+                        hoveredItem === workflow.id 
+                          ? 'text-6xl md:text-7xl text-neutral-900 dark:text-white' 
+                          : 'text-2xl md:text-3xl text-neutral-600 dark:text-neutral-400'
+                      }`}
+                    >
+                      {workflow.name}
+                    </h3>
+                    {workflow.badge && (
+                      <span 
+                        className={`px-2 py-1 text-xs font-medium rounded-full transition-all duration-300 ${
+                          hoveredItem === workflow.id
+                            ? 'bg-neutral-900 dark:bg-white text-white dark:text-neutral-900'
+                            : 'bg-neutral-200 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-400'
+                        }`}
+                      >
+                        {workflow.badge}
+                      </span>
+                    )}
+                  </div>
+                  
+                  <div 
+                    className={`transition-all duration-300 ${
+                      hoveredItem === workflow.id 
+                        ? 'opacity-100 translate-x-0' 
+                        : 'opacity-0 translate-x-4'
+                    }`}
+                  >
+                    <span className="text-sm font-medium">→</span>
+                  </div>
                 </div>
-                <Palette className="w-16 h-16 text-neutral-400 transition-colors duration-300 group-hover:text-[#A855F7] mb-6" />
-                <h3 className="text-lg font-semibold text-neutral-500 dark:text-neutral-400 transition-colors duration-300 group-hover:text-[#A855F7] mb-4">STYLIZE IT</h3>
-                <button className="text-sm text-neutral-500 dark:text-neutral-400 font-medium transition-colors duration-300 group-hover:text-[#A855F7] px-6 py-2 rounded-lg border border-neutral-300 dark:border-neutral-600 group-hover:border-[#A855F7]">
-                  TRY IT
-                </button>
-              </div>
-            </Link>
+              </Link>
+            ))}
+          </div>
 
-            <Link to="/tweak-it" className="group">
-              <div className="relative p-8 rounded-2xl bg-neutral-100/80 dark:bg-neutral-800/80 backdrop-blur-xl border border-white/10 shadow-lg transition-all duration-300 group-hover:bg-gradient-to-br group-hover:from-[#FFF7ED]/80 group-hover:via-[#FFFBF5]/50 group-hover:to-[#FFFEF9]/30 hover:shadow-2xl hover:scale-[1.02] aspect-square flex flex-col items-center justify-center text-center">
-                <div className="absolute top-4 right-4 px-2 py-1 bg-neutral-200 dark:bg-neutral-700 group-hover:bg-[#F97316]/20 rounded-full transition-colors duration-300">
-                  <span className="text-xs font-medium text-neutral-500 dark:text-neutral-400 group-hover:text-[#F97316]">NEW</span>
-                </div>
-                <Settings className="w-16 h-16 text-neutral-400 transition-colors duration-300 group-hover:text-[#F97316] mb-6" />
-                <h3 className="text-lg font-semibold text-neutral-500 dark:text-neutral-400 transition-colors duration-300 group-hover:text-[#F97316] mb-4">TWEAK IT</h3>
-                <button className="text-sm text-neutral-500 dark:text-neutral-400 font-medium transition-colors duration-300 group-hover:text-[#F97316] px-6 py-2 rounded-lg border border-neutral-300 dark:border-neutral-600 group-hover:border-[#F97316]">
-                  TRY IT
-                </button>
-              </div>
-            </Link>
-
-            <Link to="/video-it" className="group">
-              <div className="relative p-8 rounded-2xl bg-neutral-100/80 dark:bg-neutral-800/80 backdrop-blur-xl border border-white/10 shadow-lg transition-all duration-300 group-hover:bg-gradient-to-br group-hover:from-[#F0F9FF]/80 group-hover:via-[#E0F2FE]/50 group-hover:to-[#F0F9FF]/30 hover:shadow-2xl hover:scale-[1.02] aspect-square flex flex-col items-center justify-center text-center">
-                <div className="absolute top-4 right-4 px-2 py-1 bg-neutral-200 dark:bg-neutral-700 group-hover:bg-[#0284C7]/20 rounded-full transition-colors duration-300">
-                  <span className="text-xs font-medium text-neutral-500 dark:text-neutral-400 group-hover:text-[#0284C7]">NEW</span>
-                </div>
-                <Video className="w-16 h-16 text-neutral-400 transition-colors duration-300 group-hover:text-[#0284C7] mb-6" />
-                <h3 className="text-lg font-semibold text-neutral-500 dark:text-neutral-400 transition-colors duration-300 group-hover:text-[#0284C7] mb-4">VIDEO IT</h3>
-                <button className="text-sm text-neutral-500 dark:text-neutral-400 font-medium transition-colors duration-300 group-hover:text-[#0284C7] px-6 py-2 rounded-lg border border-neutral-300 dark:border-neutral-600 group-hover:border-[#0284C7]">
-                  TRY IT
-                </button>
-              </div>
+          {/* Gallery Link */}
+          <div className="mt-16">
+            <Link 
+              to="/gallery"
+              className="text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors text-sm tracking-wide"
+            >
+              view gallery →
             </Link>
           </div>
-        </section>
+        </div>
       </div>
 
       {/* Changelog Modal */}
