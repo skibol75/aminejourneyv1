@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "api/fal/proxy.ts": {
+      "runtime": "@vercel/node"
+    },
+    "api/fal/upload.ts": {
+      "runtime": "@vercel/node"
+    }
+  }
+}
