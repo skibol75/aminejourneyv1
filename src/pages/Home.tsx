@@ -24,10 +24,10 @@ export default function Home() {
         {/* Workflows Section - Centered */}
         <section className="w-full max-w-4xl">
           <div className="flex items-center justify-center mb-8 gap-3">
-            <Wand2 className="w-8 h-8 text-emerald-500" />
             <h2 className="text-3xl font-medium tracking-wide text-center bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent animate-fast-gradient">
               Hello Amine,<br />Choose your creative journey
             </h2>
+            <Wand2 className="w-8 h-8 text-emerald-500" />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Link to="/prompt-image" className="group">
