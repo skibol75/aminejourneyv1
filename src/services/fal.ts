@@ -12,6 +12,13 @@ interface FalKontextInput {
   seed?: number;
 }
 
+interface FalVideoInput {
+  prompt: string;
+  image_url: string;
+  duration?: '6' | '10';
+  prompt_optimizer?: boolean;
+}
+
 interface FalQueueResponse {
   status: 'IN_QUEUE' | 'IN_PROGRESS' | 'COMPLETED';
   request_id: string;
@@ -38,12 +45,28 @@ interface FalKontextOutput {
   seed: number;
 }
 
+interface FalVideoOutput {
+  video: {
+    url: string;
+    file_size: number;
+    file_name: string;
+    content_type: string;
+  };
+}
+
 interface FalGenerationParams {
   prompt: string;
   image_url?: string;
   width?: number;
   height?: number;
   guidance_scale?: number;
+}
+
+interface FalVideoParams {
+  prompt: string;
+  image_url: string;
+  duration?: '6' | '10';
+  prompt_optimizer?: boolean;
 }
 
 // Convert width/height to aspect ratio format expected by Fal.ai
@@ -101,6 +124,34 @@ export async function generateImageWithFal(params: FalGenerationParams): Promise
   }
 }
 
+export async function generateVideoWithFal(params: FalVideoParams): Promise<string> {
+  try {
+    // Prepare the request payload according to the Minimax Hailuo-02 OpenAPI spec
+    const payload: FalVideoInput = {
+      prompt: params.prompt,
+      image_url: params.image_url,
+      duration: params.duration || '6',
+      prompt_optimizer: params.prompt_optimizer !== undefined ? params.prompt_optimizer : true
+    };
+
+    // Submit request to the queue endpoint via proxy
+    const queueResult: FalQueueResponse = await callFalProxy({
+      url: 'https://queue.fal.run/fal-ai/minimax/hailuo-02/standard/image-to-video',
+      method: 'POST',
+      body: payload
+    });
+
+    console.log('Video queue result:', queueResult);
+
+    // Poll for results using the status URL
+    return await pollForVideoResult(queueResult.request_id);
+    
+  } catch (error: any) {
+    console.error('Fal.ai Video API error:', error);
+    throw new Error(error.message || 'Failed to generate video with Fal.ai');
+  }
+}
+
 async function pollForResult(requestId: string): Promise<string> {
   const maxAttempts = 60; // 5 minutes with 5-second intervals
   let attempts = 0;
@@ -152,6 +203,59 @@ async function pollForResult(requestId: string): Promise<string> {
   }
 
   throw new Error('Generation timeout. Please try again.');
+}
+
+async function pollForVideoResult(requestId: string): Promise<string> {
+  const maxAttempts = 120; // 10 minutes with 5-second intervals (video generation takes longer)
+  let attempts = 0;
+
+  while (attempts < maxAttempts) {
+    try {
+      const status: FalQueueResponse = await callFalProxy({
+        url: `https://queue.fal.run/fal-ai/minimax/hailuo-02/standard/image-to-video/requests/${requestId}/status`,
+        method: 'GET'
+      });
+
+      console.log('Video poll status:', status);
+
+      if (status.status === 'COMPLETED' && status.response_url) {
+        const result: FalVideoOutput = await callFalProxy({
+          url: status.response_url,
+          method: 'GET'
+        });
+        
+        if (result.video && result.video.url) {
+          return result.video.url;
+        }
+      }
+
+      if (status.status === 'COMPLETED' && !status.response_url) {
+        // Try to get result directly using the request ID
+        try {
+          const result: FalVideoOutput = await callFalProxy({
+            url: `https://queue.fal.run/fal-ai/minimax/hailuo-02/standard/image-to-video/requests/${requestId}`,
+            method: 'GET'
+          });
+          
+          if (result.video && result.video.url) {
+            return result.video.url;
+          }
+        } catch (error) {
+          console.log('Direct video result fetch failed, continuing to poll...');
+        }
+      }
+
+      // Wait 5 seconds before next poll
+      await new Promise(resolve => setTimeout(resolve, 5000));
+      attempts++;
+    } catch (error) {
+      console.error('Video polling error:', error);
+      attempts++;
+      await new Promise(resolve => setTimeout(resolve, 5000));
+    }
+  }
+
+  throw new Error('Video generation timeout. Please try again.');
 }
 
 export async function uploadImageToFal(imageFile: File): Promise<string> {

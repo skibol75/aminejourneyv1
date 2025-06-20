@@ -1,16 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Brain, Palette, Settings } from 'lucide-react';
+import { Brain, Palette, Settings, Video } from 'lucide-react';
 
 export default function Workflows() {
   return (
-    <div className="max-w-lg mx-auto">
+    <div className="max-w-2xl mx-auto">
       <div className="mb-8">
         <h1 className="text-2xl font-medium mb-2">Workflows</h1>
         <p className="text-neutral-400">Create and manage your AI image generation workflows</p>
       </div>
       
-      <div className="flex flex-col gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Link to="/prompt-image" className="group">
           <div className="relative p-6 rounded-3xl bg-neutral-100/80 dark:bg-neutral-800/80 backdrop-blur-xl border border-white/10 shadow-lg transition-all duration-300 group-hover:bg-gradient-to-br group-hover:from-[#E0F7FF]/80 group-hover:via-[#E8F7FF]/50 group-hover:to-[#F2FCFF]/30 hover:shadow-2xl hover:scale-[1.02]">
             <Brain className="w-20 h-20 text-neutral-400 transition-colors duration-300 group-hover:text-[#0EA5E9] mb-6" />
@@ -38,6 +38,17 @@ export default function Workflows() {
             <Settings className="w-20 h-20 text-neutral-400 transition-colors duration-300 group-hover:text-[#F97316] mb-6" />
             <h3 className="text-xl font-semibold text-neutral-500 dark:text-neutral-400 transition-colors duration-300 group-hover:text-[#F97316] mb-2">TWEAK IT</h3>
             <button className="text-neutral-500 dark:text-neutral-400 font-medium transition-colors duration-300 group-hover:text-[#F97316]">TRY IT</button>
+          </div>
+        </Link>
+
+        <Link to="/video-it" className="group">
+          <div className="relative p-6 rounded-3xl bg-neutral-100/80 dark:bg-neutral-800/80 backdrop-blur-xl border border-white/10 shadow-lg transition-all duration-300 group-hover:bg-gradient-to-br group-hover:from-[#F0F9FF]/80 group-hover:via-[#E0F2FE]/50 group-hover:to-[#F0F9FF]/30 hover:shadow-2xl hover:scale-[1.02]">
+            <div className="absolute top-6 right-6 px-3 py-1 bg-neutral-200 dark:bg-neutral-700 group-hover:bg-[#0284C7]/20 rounded-full transition-colors duration-300">
+              <span className="text-xs font-medium text-neutral-500 dark:text-neutral-400 group-hover:text-[#0284C7]">NEW</span>
+            </div>
+            <Video className="w-20 h-20 text-neutral-400 transition-colors duration-300 group-hover:text-[#0284C7] mb-6" />
+            <h3 className="text-xl font-semibold text-neutral-500 dark:text-neutral-400 transition-colors duration-300 group-hover:text-[#0284C7] mb-2">VIDEO IT</h3>
+            <button className="text-neutral-500 dark:text-neutral-400 font-medium transition-colors duration-300 group-hover:text-[#0284C7]">TRY IT</button>
           </div>
         </Link>
       </div>

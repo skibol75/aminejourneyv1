@@ -7,6 +7,7 @@ import Gallery from './pages/Gallery';
 import PromptImage from './pages/PromptImage';
 import StylizeIt from './pages/StylizeIt';
 import TweakIt from './pages/TweakIt';
+import VideoIt from './pages/VideoIt';
 import Login from './pages/Login';
 
 function App() {
@@ -124,6 +125,7 @@ function App() {
             <Route path="/prompt-image" element={<PromptImage />} />
             <Route path="/stylize-it" element={<StylizeIt />} />
             <Route path="/tweak-it" element={<TweakIt />} />
+            <Route path="/video-it" element={<VideoIt />} />
           </Routes>
         </main>
       </div>

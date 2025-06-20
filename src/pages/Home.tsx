@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Brain, Palette, Settings, X, Wand2 } from 'lucide-react';
+import { Brain, Palette, Settings, X, Wand2, Video } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function Home() {
@@ -22,14 +22,14 @@ export default function Home() {
     <>
       <div className={`flex flex-col items-center justify-center min-h-full space-y-16 ${showChangelog ? 'blur-sm' : ''}`}>
         {/* Workflows Section - Centered */}
-        <section className="w-full max-w-4xl">
+        <section className="w-full max-w-5xl">
           <div className="flex items-center justify-center mb-8 gap-3">
             <h2 className="text-3xl font-medium tracking-wide text-center bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent animate-fast-gradient">
               Hello Amine,<br />Choose your creative journey
             </h2>
             <Wand2 className="w-8 h-8 text-emerald-500" />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Link to="/prompt-image" className="group">
               <div className="relative p-8 rounded-2xl bg-neutral-100/80 dark:bg-neutral-800/80 backdrop-blur-xl border border-white/10 shadow-lg transition-all duration-300 group-hover:bg-gradient-to-br group-hover:from-[#E0F7FF]/80 group-hover:via-[#E8F7FF]/50 group-hover:to-[#F2FCFF]/30 hover:shadow-2xl hover:scale-[1.02] aspect-square flex flex-col items-center justify-center text-center">
                 <Brain className="w-16 h-16 text-neutral-400 transition-colors duration-300 group-hover:text-[#0EA5E9] mb-6" />
@@ -61,6 +61,19 @@ export default function Home() {
                 <Settings className="w-16 h-16 text-neutral-400 transition-colors duration-300 group-hover:text-[#F97316] mb-6" />
                 <h3 className="text-lg font-semibold text-neutral-500 dark:text-neutral-400 transition-colors duration-300 group-hover:text-[#F97316] mb-4">TWEAK IT</h3>
                 <button className="text-sm text-neutral-500 dark:text-neutral-400 font-medium transition-colors duration-300 group-hover:text-[#F97316] px-6 py-2 rounded-lg border border-neutral-300 dark:border-neutral-600 group-hover:border-[#F97316]">
+                  TRY IT
+                </button>
+              </div>
+            </Link>
+
+            <Link to="/video-it" className="group">
+              <div className="relative p-8 rounded-2xl bg-neutral-100/80 dark:bg-neutral-800/80 backdrop-blur-xl border border-white/10 shadow-lg transition-all duration-300 group-hover:bg-gradient-to-br group-hover:from-[#F0F9FF]/80 group-hover:via-[#E0F2FE]/50 group-hover:to-[#F0F9FF]/30 hover:shadow-2xl hover:scale-[1.02] aspect-square flex flex-col items-center justify-center text-center">
+                <div className="absolute top-4 right-4 px-2 py-1 bg-neutral-200 dark:bg-neutral-700 group-hover:bg-[#0284C7]/20 rounded-full transition-colors duration-300">
+                  <span className="text-xs font-medium text-neutral-500 dark:text-neutral-400 group-hover:text-[#0284C7]">NEW</span>
+                </div>
+                <Video className="w-16 h-16 text-neutral-400 transition-colors duration-300 group-hover:text-[#0284C7] mb-6" />
+                <h3 className="text-lg font-semibold text-neutral-500 dark:text-neutral-400 transition-colors duration-300 group-hover:text-[#0284C7] mb-4">VIDEO IT</h3>
+                <button className="text-sm text-neutral-500 dark:text-neutral-400 font-medium transition-colors duration-300 group-hover:text-[#0284C7] px-6 py-2 rounded-lg border border-neutral-300 dark:border-neutral-600 group-hover:border-[#0284C7]">
                   TRY IT
                 </button>
               </div>
@@ -108,6 +121,10 @@ export default function Home() {
               <div className="flex items-start gap-2">
                 <span className="text-neutral-400 mt-0.5">•</span>
                 <span>New TWEAK IT workflow for precise image editing</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="text-neutral-400 mt-0.5">•</span>
+                <span>New VIDEO IT workflow for image-to-video generation</span>
               </div>
             </div>
 
