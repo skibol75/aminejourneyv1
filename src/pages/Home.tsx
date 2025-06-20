@@ -20,67 +20,53 @@ export default function Home() {
 
   return (
     <>
-      <div className={`flex flex-col items-center justify-center min-h-full ${showChangelog ? 'blur-sm' : ''}`}>
-        {/* Main Content - Centered */}
-        <div className="w-full max-w-5xl px-8">
-          {/* Header */}
-          <div className="text-center mb-16">
-            <h1 className="text-4xl font-light tracking-wide mb-4 bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent animate-fast-gradient">
-              Hello Amine,
-            </h1>
-            <div className="flex items-center justify-center gap-3">
-              <h2 className="text-4xl font-light tracking-wide bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent animate-fast-gradient">
-                Choose your creative journey
-              </h2>
-              <Wand2 className="w-8 h-8 text-emerald-500" />
-            </div>
+      <div className={`flex flex-col items-center justify-center min-h-full space-y-16 ${showChangelog ? 'blur-sm' : ''}`}>
+        {/* Workflows Section - Centered */}
+        <section className="w-full max-w-4xl">
+          <div className="flex items-center justify-center mb-8 gap-3">
+            <Wand2 className="w-8 h-8 text-emerald-500" />
+            <h2 className="text-3xl font-medium tracking-wide text-center bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent animate-fast-gradient">
+              Hello Amine,<br />Choose your creative journey
+            </h2>
           </div>
-
-          {/* Workflows Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Link to="/prompt-image" className="group">
-              <div className="relative p-12 rounded-3xl bg-white dark:bg-neutral-800 shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] aspect-square flex flex-col items-center justify-center text-center border border-gray-100 dark:border-neutral-700">
-                <Brain className="w-20 h-20 text-gray-400 dark:text-neutral-500 transition-colors duration-300 group-hover:text-[#0EA5E9] mb-8" />
-                <h3 className="text-xl font-medium text-gray-600 dark:text-neutral-400 transition-colors duration-300 group-hover:text-[#0EA5E9] mb-6 tracking-wide">
-                  PROMPT & IMAGE IT
-                </h3>
-                <button className="text-sm text-gray-500 dark:text-neutral-500 font-medium transition-colors duration-300 group-hover:text-[#0EA5E9] px-8 py-3 rounded-lg border border-gray-300 dark:border-neutral-600 group-hover:border-[#0EA5E9] tracking-wide">
+              <div className="relative p-8 rounded-2xl bg-neutral-100/80 dark:bg-neutral-800/80 backdrop-blur-xl border border-white/10 shadow-lg transition-all duration-300 group-hover:bg-gradient-to-br group-hover:from-[#E0F7FF]/80 group-hover:via-[#E8F7FF]/50 group-hover:to-[#F2FCFF]/30 hover:shadow-2xl hover:scale-[1.02] aspect-square flex flex-col items-center justify-center text-center">
+                <Brain className="w-16 h-16 text-neutral-400 transition-colors duration-300 group-hover:text-[#0EA5E9] mb-6" />
+                <h3 className="text-lg font-semibold text-neutral-500 dark:text-neutral-400 transition-colors duration-300 group-hover:text-[#0EA5E9] mb-4">PROMPT & IMAGE IT</h3>
+                <button className="text-sm text-neutral-500 dark:text-neutral-400 font-medium transition-colors duration-300 group-hover:text-[#0EA5E9] px-6 py-2 rounded-lg border border-neutral-300 dark:border-neutral-600 group-hover:border-[#0EA5E9]">
                   TRY IT
                 </button>
               </div>
             </Link>
 
             <Link to="/stylize-it" className="group relative">
-              <div className="relative p-12 rounded-3xl bg-white dark:bg-neutral-800 shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] aspect-square flex flex-col items-center justify-center text-center border border-gray-100 dark:border-neutral-700">
-                <div className="absolute top-6 right-6 px-3 py-1 bg-gray-100 dark:bg-neutral-700 group-hover:bg-[#A855F7]/20 rounded-full transition-colors duration-300">
-                  <span className="text-xs font-medium text-gray-500 dark:text-neutral-400 group-hover:text-[#A855F7] tracking-wide">BETA</span>
+              <div className="relative p-8 rounded-2xl bg-neutral-100/80 dark:bg-neutral-800/80 backdrop-blur-xl border border-white/10 shadow-lg transition-all duration-300 group-hover:bg-gradient-to-br group-hover:from-[#F3E8FF]/80 group-hover:via-[#F5EEFF]/50 group-hover:to-[#F8F2FF]/30 hover:shadow-2xl hover:scale-[1.02] aspect-square flex flex-col items-center justify-center text-center">
+                <div className="absolute top-4 right-4 px-2 py-1 bg-neutral-200 dark:bg-neutral-700 group-hover:bg-[#A855F7]/20 rounded-full transition-colors duration-300">
+                  <span className="text-xs font-medium text-neutral-500 dark:text-neutral-400 group-hover:text-[#A855F7]">BETA</span>
                 </div>
-                <Palette className="w-20 h-20 text-gray-400 dark:text-neutral-500 transition-colors duration-300 group-hover:text-[#A855F7] mb-8" />
-                <h3 className="text-xl font-medium text-gray-600 dark:text-neutral-400 transition-colors duration-300 group-hover:text-[#A855F7] mb-6 tracking-wide">
-                  STYLIZE IT
-                </h3>
-                <button className="text-sm text-gray-500 dark:text-neutral-500 font-medium transition-colors duration-300 group-hover:text-[#A855F7] px-8 py-3 rounded-lg border border-gray-300 dark:border-neutral-600 group-hover:border-[#A855F7] tracking-wide">
+                <Palette className="w-16 h-16 text-neutral-400 transition-colors duration-300 group-hover:text-[#A855F7] mb-6" />
+                <h3 className="text-lg font-semibold text-neutral-500 dark:text-neutral-400 transition-colors duration-300 group-hover:text-[#A855F7] mb-4">STYLIZE IT</h3>
+                <button className="text-sm text-neutral-500 dark:text-neutral-400 font-medium transition-colors duration-300 group-hover:text-[#A855F7] px-6 py-2 rounded-lg border border-neutral-300 dark:border-neutral-600 group-hover:border-[#A855F7]">
                   TRY IT
                 </button>
               </div>
             </Link>
 
             <Link to="/tweak-it" className="group">
-              <div className="relative p-12 rounded-3xl bg-white dark:bg-neutral-800 shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] aspect-square flex flex-col items-center justify-center text-center border border-gray-100 dark:border-neutral-700">
-                <div className="absolute top-6 right-6 px-3 py-1 bg-gray-100 dark:bg-neutral-700 group-hover:bg-[#F97316]/20 rounded-full transition-colors duration-300">
-                  <span className="text-xs font-medium text-gray-500 dark:text-neutral-400 group-hover:text-[#F97316] tracking-wide">NEW</span>
+              <div className="relative p-8 rounded-2xl bg-neutral-100/80 dark:bg-neutral-800/80 backdrop-blur-xl border border-white/10 shadow-lg transition-all duration-300 group-hover:bg-gradient-to-br group-hover:from-[#FFF7ED]/80 group-hover:via-[#FFFBF5]/50 group-hover:to-[#FFFEF9]/30 hover:shadow-2xl hover:scale-[1.02] aspect-square flex flex-col items-center justify-center text-center">
+                <div className="absolute top-4 right-4 px-2 py-1 bg-neutral-200 dark:bg-neutral-700 group-hover:bg-[#F97316]/20 rounded-full transition-colors duration-300">
+                  <span className="text-xs font-medium text-neutral-500 dark:text-neutral-400 group-hover:text-[#F97316]">NEW</span>
                 </div>
-                <Settings className="w-20 h-20 text-gray-400 dark:text-neutral-500 transition-colors duration-300 group-hover:text-[#F97316] mb-8" />
-                <h3 className="text-xl font-medium text-gray-600 dark:text-neutral-400 transition-colors duration-300 group-hover:text-[#F97316] mb-6 tracking-wide">
-                  TWEAK IT
-                </h3>
-                <button className="text-sm text-gray-500 dark:text-neutral-500 font-medium transition-colors duration-300 group-hover:text-[#F97316] px-8 py-3 rounded-lg border border-gray-300 dark:border-neutral-600 group-hover:border-[#F97316] tracking-wide">
+                <Settings className="w-16 h-16 text-neutral-400 transition-colors duration-300 group-hover:text-[#F97316] mb-6" />
+                <h3 className="text-lg font-semibold text-neutral-500 dark:text-neutral-400 transition-colors duration-300 group-hover:text-[#F97316] mb-4">TWEAK IT</h3>
+                <button className="text-sm text-neutral-500 dark:text-neutral-400 font-medium transition-colors duration-300 group-hover:text-[#F97316] px-6 py-2 rounded-lg border border-neutral-300 dark:border-neutral-600 group-hover:border-[#F97316]">
                   TRY IT
                 </button>
               </div>
             </Link>
           </div>
-        </div>
+        </section>
       </div>
 
       {/* Changelog Modal */}
